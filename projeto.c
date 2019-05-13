@@ -16,7 +16,6 @@ void acoes(){
 
     }
     else if(escolha_home==2){
-
     }
     else if(escolha_home==3){
 

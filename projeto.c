@@ -9,6 +9,7 @@ printf("4-Devolucao\n");
 printf("5-Reserva\n\n");
 printf("Escolha: ");
 scanf("%d",&escolha_home);
+acoes();
 }
 
 void acoes(){
@@ -16,6 +17,7 @@ void acoes(){
 
     }
     else if(escolha_home==2){
+
     }
     else if(escolha_home==3){
 
@@ -26,10 +28,11 @@ void acoes(){
     else if(escolha_home==5){
 
     }
+    else {system("CLS");printf("Escolha uma opcao valida!\n");home_page();}
 }
 
 int main (){
 home_page();
-acoes();
-    return 0;
+
+    system ("pause");
 }

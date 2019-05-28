@@ -4,14 +4,15 @@
 #include <locale.h>
 using namespace std;
 char escolha_home;
+int num_user;
 
-typedef struct
-{
+struct Cadastro_Usuario{
+
     char nome[50];
     char cpf[25];
     char telefone[25];
     char endereco[50];
-}Cadastro_Usuario;
+};
 
 typedef struct
 {
@@ -45,6 +46,8 @@ void home_page(){
     Cadastro_Usuario user;
     Cadastro_Livro book;
     char opcao;
+    int escolha_case6,contador;
+    struct Cadastro_Usuario usuario[3];
 
     do
     {
@@ -83,8 +86,23 @@ void home_page(){
                 case'5':
 
 
-                case'6':
-
+                case'6':// Estou resolvendo isso Ass: Kevenny
+                    cout<< "1-Livros\n2-Usuarios\nInforme a opcao desejada: ";
+                    cin>> escolha_case6;
+                    if(escolha_case6==1){
+                        for(;num_user<=0;){
+                            cout<< "";
+                        }
+                    }
+                    else if(escolha_case6==2){
+                        for(contador=0;contador<=num_user;contador++){
+                            printf("%s",usuario[contador].cpf);
+                        }
+                    }
+                    else{
+                        cout<< "Escolha invalida!\n\n";
+                        break;
+                    }
 
                 case'7':
                     break;
@@ -98,8 +116,7 @@ void home_page(){
 
 void cadastro(Cadastro_Usuario usu){
 
-    int num_user;
-        for (num_user=1; num_user<=2; num_user++)
+        for (num_user=1; num_user<=1; num_user++)
         {
             fflush(stdin);
             cout << "Informe o nome do Usuario: ";

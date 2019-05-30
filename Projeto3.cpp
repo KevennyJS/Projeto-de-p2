@@ -26,7 +26,7 @@ typedef struct
 
 void home_page(Cadastro_Livro livro[], int& id_livro);
 
-void cadastro(Cadastro_Usuario usu, int& num_user);
+void cadastro(Cadastro_Usuario usu);
 
 void cadastro2(Cadastro_Livro liv[], int& id_livro);
 
@@ -69,7 +69,7 @@ void home_page(Cadastro_Livro livro[],int& id_livro){
             switch (escolha_home){
 
                 case'1':
-                    cadastro(usuario, num_user);
+                    cadastro(usuario);
                     system("cls");
                     break;
 
@@ -118,7 +118,7 @@ void home_page(Cadastro_Livro livro[],int& id_livro){
     }while(opcao!= '7');
 }
 
-void cadastro(Cadastro_Usuario usuario, int& num_user){
+void cadastro(Cadastro_Usuario usuario){
 int contador;
         for (contador=1; contador<=1; contador++)
         {

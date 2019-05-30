@@ -46,8 +46,7 @@ int main (){
 }
 
 void home_page(Cadastro_Livro livro[],int& id_livro){
-    char opcao;
-    int escolha_case6,contador;
+    int escolha_case6;
     struct Cadastro_Usuario usuario;
 
     do
@@ -87,7 +86,7 @@ void home_page(Cadastro_Livro livro[],int& id_livro){
                 case'5':
 
 
-                case'6':// Estou resolvendo isso Ass: Kevenny
+                case'6':
                     cout<< "1-Livros\n2-Usuarios\n\nInforme a opcao desejada: ";
                     cin>> escolha_case6;
                     if(escolha_case6==1){
@@ -104,13 +103,14 @@ void home_page(Cadastro_Livro livro[],int& id_livro){
                     }
 
                 case'7':
+                    exit;
                     break;
 
                 default:
                     system("CLS");
                     cout<< "Escolha uma opcao valida!\n\n";
                 }
-    }while(opcao!= '7');
+    }while(escolha_home!= '7');
 }
 
 void cadastro(int opcao){
@@ -146,7 +146,7 @@ void cadastro(int opcao){
                     printf("Telefone ..: %s\n", usuario[i-1].telefone);
                     printf("Endereco ..: %s\n", usuario[i-1].endereco);
                 }
-            printf("\nPrecione ENTER para continuar");
+            printf("\nPrecione ENTER para continuar\n");
             system("pause");
             system("CLS");
     }

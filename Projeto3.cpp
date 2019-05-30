@@ -4,7 +4,7 @@
 #include <locale.h>
 using namespace std;
 char escolha_home;
-int num_user;
+int num_user=1,num_max_user=100;;
 
 struct Cadastro_Usuario{
 
@@ -26,7 +26,7 @@ typedef struct
 
 void home_page(Cadastro_Livro livro[], int& id_livro);
 
-void cadastro(Cadastro_Usuario usu);
+void cadastro(int x);
 
 void cadastro2(Cadastro_Livro liv[], int& id_livro);
 
@@ -69,7 +69,7 @@ void home_page(Cadastro_Livro livro[],int& id_livro){
             switch (escolha_home){
 
                 case'1':
-                    cadastro(usuario);
+                    cadastro(1);
                     system("cls");
                     break;
 
@@ -95,13 +95,8 @@ void home_page(Cadastro_Livro livro[],int& id_livro){
 
                     }
                     else if(escolha_case6==2){
-                        for(contador=1;contador<=num_user;contador++){
-                            printf("----------Usuario %d----------\n",contador);
-                            printf("Nome ...........: %s\n", usuario.nome);
-                            printf("CPF .....: %s\n", usuario.cpf);
-                            printf("Telefone ...: %s\n" , usuario.telefone);
-                            printf("Endereco do usuario ...: %s\n" , usuario.endereco);
-                        }
+                        system("CLS");
+                        cadastro(2);
                     }
                     else{
                         cout<< "Escolha invalida!\n\n";
@@ -118,29 +113,43 @@ void home_page(Cadastro_Livro livro[],int& id_livro){
     }while(opcao!= '7');
 }
 
-void cadastro(Cadastro_Usuario usuario){
-int contador;
-        for (contador=1; contador<=1; contador++)
-        {
-              printf("\n---------- Cadastro de usuario -----------\n\n\n");
-              //fgets(variavel, tamanho da string, entrada)
-              fflush(stdin);
-              printf("Nome do usuario: ");
-              gets(usuario.nome);
-              fflush(stdin);
-              printf("CPF: ");
-              gets(usuario.cpf);
-              fflush(stdin);
-              printf("Telefone: ");
-              gets(usuario.telefone);
-              fflush(stdin);
-              printf("Endereco do usuario: ");
-              gets(usuario.endereco);
-              fflush(stdin);
-              num_user++;
+void cadastro(int opcao){
+    int contador,i;
+    struct Cadastro_Usuario usuario[num_max_user];
+
+    if(opcao==1){
+        contador = num_user-1;
+        for(;contador < num_user;contador++) {
+            printf("********** Cadastro Do Aluno **********\n\n");
+            printf("Nome: ...................: ");
+            fflush(stdin);
+            gets(usuario[contador].nome);
+            printf("CPF:: ");
+            fflush(stdin);
+            gets(usuario[contador].cpf);
+            printf("Telefone: ");
+            fflush(stdin);
+            gets(usuario[contador].telefone);
+            printf("endereco: ");
+            fflush(stdin);
+            gets(usuario[contador].endereco);
+            num_user++;contador++;
         }
-        cout << "\n\nSalvando Dados...";
-        Sleep(1500);
+    }
+
+    if (opcao==2){
+            printf("********** Dados do aluno **********\n\n");
+                for(i=1; i < num_user; i++){
+                    printf("----------Usuario %d----------\n",i);
+                    printf("Nome ......: %s\n", usuario[i-1].nome);
+                    printf("CPF .......: %s\n", usuario[i-1].cpf);
+                    printf("Telefone ..: %s\n", usuario[i-1].telefone);
+                    printf("Endereco ..: %s\n", usuario[i-1].endereco);
+                }
+            printf("\nPrecione ENTER para continuar");
+            system("pause");
+            system("CLS");
+    }
 }
 
 void cadastro2(Cadastro_Livro livro[], int& id_livro)

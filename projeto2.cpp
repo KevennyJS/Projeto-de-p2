@@ -47,7 +47,7 @@ void home_page(){
     Cadastro_Livro book;
     char opcao;
     int escolha_case6,contador;
-    struct Cadastro_Usuario usuario[3];
+    struct Cadastro_Usuario usuario;
 
     do
     {
@@ -90,13 +90,15 @@ void home_page(){
                     cout<< "1-Livros\n2-Usuarios\nInforme a opcao desejada: ";
                     cin>> escolha_case6;
                     if(escolha_case6==1){
-                        for(;num_user<=0;){
-                            cout<< "";
-                        }
+
                     }
                     else if(escolha_case6==2){
-                        for(contador=0;contador<=num_user;contador++){
-                            printf("%s",usuario[contador].cpf);
+                        for(contador=1;contador<=num_user;contador++){
+                            printf("----------Usuario %d----------\n",contador);
+                            printf("Nome ...........: %s\n", usuario.nome);
+                            printf("CPF .....: %s\n", usuario.cpf);
+                            printf("Telefone ...: %s\n" , usuario.telefone);
+                            printf("Endereco do usuario ...: %s\n" , usuario.endereco);
                         }
                     }
                     else{
@@ -114,19 +116,26 @@ void home_page(){
     }while(opcao!= '7');
 }
 
-void cadastro(Cadastro_Usuario usu){
-
-        for (num_user=1; num_user<=1; num_user++)
+void cadastro(Cadastro_Usuario usuario){
+int contador;
+        for (contador=1; contador<=1; contador++)
         {
-            fflush(stdin);
-            cout << "Informe o nome do Usuario: ";
-            cin.getline(usuario[num_user].nome, 50);
-            cout << "Informe o endereço: ";
-            cin.getline(usuario[num_user].endereco, 50);
-            cout << "Informe o telefone: ";
-            cin.getline(usuario[num_user].telefone, 25);
-            cout << "Informe o CPF: ";
-            cin.getline(usuario[num_user].cpf, 25);
+              printf("\n---------- Cadastro de usuario -----------\n\n\n");
+              //fgets(variavel, tamanho da string, entrada)
+              fflush(stdin);
+              printf("Nome do usuario: ");
+              gets(usuario.nome);
+              fflush(stdin);
+              printf("CPF: ");
+              gets(usuario.cpf);
+              fflush(stdin);
+              printf("Telefone: ");
+              gets(usuario.telefone);
+              fflush(stdin);
+              printf("Endereco do usuario: ");
+              gets(usuario.endereco);
+              fflush(stdin);
+              num_user++;
         }
         cout << "\n\nSalvando Dados...";
         Sleep(1500);

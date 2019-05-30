@@ -176,7 +176,7 @@ void exibir_livros (Cadastro_Livro livro[], int id_livro)
     int indice;
         for (indice=1; indice<id_livro; indice++)
         {
-            cout << "\n\nLivro["<<id_livro<<"]\n";
+            cout << "\n\nLivro["<<indice<<"]\n";
             cout << endl << "Código do Livro: " << livro[indice].codigo;
             cout << endl << "Nome do Livro: " << livro[indice].nome;
             cout << endl << "Qauntidade de Exemplares: " << livro[indice].qtd;

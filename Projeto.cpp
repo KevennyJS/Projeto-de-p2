@@ -114,7 +114,7 @@ void home_page(Cadastro_Livro livro[],int& id_livro){
 }
 
 void cadastro(int opcao){
-    int contador,i;
+    int contador,i,again;
     struct Cadastro_Usuario usuario[num_max_user];
 
     if(opcao==1){
@@ -134,6 +134,9 @@ void cadastro(int opcao){
             fflush(stdin);
             gets(usuario[contador].endereco);
             num_user++;contador++;
+            cout << "\nCadastrar outro Usuario?\n1-SIM\n2-NAO\nEscolha: ";
+            cin >> again;
+            if (again==1) contador--,system("CLS");
         }
     }
 

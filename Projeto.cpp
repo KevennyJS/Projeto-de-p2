@@ -121,10 +121,10 @@ void cadastro(int opcao){
         contador = num_user-1;
         for(;contador < num_user;contador++) {
             printf("********** Cadastro Do Aluno **********\n\n");
-            printf("Nome: ...................: ");
+            printf("Nome: ");
             fflush(stdin);
             gets(usuario[contador].nome);
-            printf("CPF:: ");
+            printf("CPF: ");
             fflush(stdin);
             gets(usuario[contador].cpf);
             printf("Telefone: ");

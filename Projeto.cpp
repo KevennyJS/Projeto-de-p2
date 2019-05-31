@@ -4,7 +4,7 @@
 #include <locale.h>
 using namespace std;
 char escolha_home;
-int num_user=1,num_max_user=100;;
+int num_user=1;
 
 struct Cadastro_Usuario{
 
@@ -87,7 +87,7 @@ void home_page(Cadastro_Livro livro[],int& id_livro){
 
 
                 case'6':
-                    cout<< "1-Livros\n2-Usuarios\n\nInforme a opcao desejada: ";
+                    cout<< "1-Livros\n2-Usuários\n\nInforme a opcão desejada: ";
                     cin>> escolha_case6;
                     if(escolha_case6==1){
                             exibir_livros(livro, id_livro);
@@ -108,48 +108,47 @@ void home_page(Cadastro_Livro livro[],int& id_livro){
 
                 default:
                     system("CLS");
-                    cout<< "Escolha uma opcao valida!\n\n";
+                    cout<< "Escolha uma opcão valida!\n\n";
                 }
     }while(escolha_home!= '7');
 }
 
 void cadastro(int opcao){
     int contador,i,again;
-    struct Cadastro_Usuario usuario[num_max_user];
+    struct Cadastro_Usuario usuario[100];
 
     if(opcao==1){
         contador = num_user-1;
         for(;contador < num_user;contador++) {
-            printf("********** Cadastro Do Aluno **********\n\n");
-            printf("Nome: ");
+            cout << "********** Cadastro Do Usuário **********\n\n";
+            cout << "Nome: ";
             fflush(stdin);
-            gets(usuario[contador].nome);
-            printf("CPF: ");
+            cin.getline(usuario[contador].nome, 50);
+            cout << "CPF: ";
             fflush(stdin);
-            gets(usuario[contador].cpf);
-            printf("Telefone: ");
+            cin.getline(usuario[contador].cpf, 25);
+            cout << "Telefone: ";
             fflush(stdin);
-            gets(usuario[contador].telefone);
-            printf("endereco: ");
+            cin.getline(usuario[contador].telefone, 25);
+            cout << "endereço: ";
             fflush(stdin);
-            gets(usuario[contador].endereco);
+            cin.getline(usuario[contador].endereco, 50);
             num_user++;contador++;
-            cout << "\nCadastrar outro Usuario?\n1-SIM\n2-NAO\nEscolha: ";
+            cout << "\nCadastrar outro Usuário?\n1-SIM\n2-NÃO\nEscolha: ";
             cin >> again;
             if (again==1) contador--,system("CLS");
         }
     }
 
     if (opcao==2){
-            printf("********** Dados do aluno **********\n\n");
+            printf("********** Dados dos Usuários **********\n\n");
                 for(i=1; i < num_user; i++){
-                    printf("----------Usuario %d----------\n",i);
+                    printf("----------Usuário %d----------\n",i);
                     printf("Nome ......: %s\n", usuario[i-1].nome);
                     printf("CPF .......: %s\n", usuario[i-1].cpf);
                     printf("Telefone ..: %s\n", usuario[i-1].telefone);
-                    printf("Endereco ..: %s\n", usuario[i-1].endereco);
+                    printf("Endereço ..: %s\n", usuario[i-1].endereco);
                 }
-            printf("\nPrecione ENTER para continuar\n");
             system("pause");
             system("CLS");
     }

@@ -12,6 +12,7 @@ struct Cadastro_Usuario{
     char cpf[25];
     char telefone[25];
     char endereco[50];
+    char livros_ativos[5];// AVISO! O CODIGO DOS LIVROS DEVEM TER APENAS 5 DIGITOS
 };
 
 typedef struct
@@ -19,6 +20,8 @@ typedef struct
     char nome[50];
     char qtd[10];
     char codigo[10];
+    char fila_espera[50]
+
 }Cadastro_Livro;
 
 
@@ -39,7 +42,6 @@ int main (){
     setlocale(LC_ALL, "portuguese");  // Comando para acentuar tudo q tiver no cout//
     int id_livro=1;
     Cadastro_Livro livro[100];
-
     home_page(livro, id_livro);
     return 0;
 
@@ -138,6 +140,8 @@ void cadastro(int opcao){
             cin >> again;
             if (again==1) contador--,system("CLS");
         }
+            cout << "\n\nSalvando Dados...";
+            Sleep(1500);
     }
 
     if (opcao==2){
@@ -190,7 +194,7 @@ void exibir_livros (Cadastro_Livro livro[], int id_livro)
             cout << "\n\nLivro["<<indice<<"]\n";
             cout << endl << "Código do Livro: " << livro[indice].codigo;
             cout << endl << "Nome do Livro: " << livro[indice].nome;
-            cout << endl << "Qauntidade de Exemplares: " << livro[indice].qtd;
+            cout << endl << "Quantidade de Exemplares: " << livro[indice].qtd;
         }
     cout << "\n\n";
     system("pause");

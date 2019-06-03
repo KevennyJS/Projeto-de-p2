@@ -177,8 +177,11 @@ void cadastro2(Cadastro_Livro livro[], int& id_livro)
         {
             cout << "---------- Cadastro de Livros["<<id_livro<<"] -----------\n\n";
             fflush(stdin);
-            cout << "Código do livro: ";
-            cin.getline(opcao, 10);
+            do
+            {
+                cout << "Código do livro(deve conter 5 dígitos): ";
+                cin.getline(opcao, 10);
+            }while(strlen(opcao)<5);
             livro[id_livro].codigo = atoi(opcao);
             fflush(stdin);
             cout << "Nome do livro: ";
@@ -201,13 +204,11 @@ void cadastro2(Cadastro_Livro livro[], int& id_livro)
 void exibir_livros (Cadastro_Livro livro[], int id_livro)
 {
     int indice;
-        cout << "*********** Dados dos Livros ***********\n\n";
+        cout << "*********** Livros Cadastrados ***********\n\n";
+        cout << endl << "\tNº\t|\tQTD\t|\tCÓDIGO\t |\tNOME\n";
         for (indice=1; indice<id_livro; indice++)
         {
-            cout << "----------Livro " << indice << "----------\n";
-            cout << endl << "Quantidade..: " << livro[indice].qtd;
-            cout << endl << "Código......: " << livro[indice].codigo;
-            cout << endl << "Nome........: " << livro[indice].nome << endl;
+            cout << endl << "\t" << indice << "\t\t" << livro[indice].qtd << "\t\t" << livro[indice].codigo << "\t\t" << livro[indice].nome;
         }
     cout << "\n\n";
 }
@@ -237,6 +238,7 @@ void emprestimo (Cadastro_Livro livro[], int id_livro)
         {
             cout << "Quantidade Indisponível.\nInforme outro código: ";
             cin >> codigo;
+            goto fix;
         }
         else if(codigo==livro[indice].codigo && livro[indice].qtd>0)
         {

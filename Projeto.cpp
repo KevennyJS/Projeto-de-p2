@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <windows.h>
 #include <locale.h>
+#include <string.h>
 using namespace std;
 char escolha_home;
 int num_user=1;
@@ -18,9 +19,9 @@ struct Cadastro_Usuario{
 typedef struct
 {
     char nome[50];
-    char qtd[10];
-    char codigo[10];
-    char fila_espera[50]
+    int qtd;
+    int codigo;
+    char fila_espera[50];
 
 }Cadastro_Livro;
 
@@ -34,6 +35,8 @@ void cadastro(int x);
 void cadastro2(Cadastro_Livro liv[], int& id_livro);
 
 void exibir_livros (Cadastro_Livro livro[], int id_livro);
+
+void emprestimo (Cadastro_Livro livro[], int id_livro);
 
 //----------------------------------------------------------------------------------------------------------------//
 
@@ -80,7 +83,9 @@ void home_page(Cadastro_Livro livro[],int& id_livro){
                     break;
 
                 case'3':
-
+                    emprestimo(livro, id_livro);
+                    system("cls");
+                    break;
 
                 case'4':
 
@@ -89,10 +94,14 @@ void home_page(Cadastro_Livro livro[],int& id_livro){
 
 
                 case'6':
+                    cout << endl << "CONSULTA:\n\n";
                     cout<< "1-Livros\n2-Usuários\n\nInforme a opcão desejada: ";
                     cin>> escolha_case6;
                     if(escolha_case6==1){
+                            system("cls");
                             exibir_livros(livro, id_livro);
+                            system("pause");
+                            system("cls");
 
                     }
                     else if(escolha_case6==2){
@@ -132,14 +141,15 @@ void cadastro(int opcao){
             cout << "Telefone: ";
             fflush(stdin);
             cin.getline(usuario[contador].telefone, 25);
-            cout << "endereço: ";
+            cout << "Endereço: ";
             fflush(stdin);
             cin.getline(usuario[contador].endereco, 50);
             num_user++;contador++;
-            cout << "\nCadastrar outro Usuário?\n1-SIM\n2-NÃO\nEscolha: ";
+            cout << "\nCadastrar outro Usuário?\n1 - SIM\n2 - NÃO\n\nInforme a opção: ";
             cin >> again;
             if (again==1) contador--,system("CLS");
         }
+            system("cls");
             cout << "\n\nSalvando Dados...";
             Sleep(1500);
     }
@@ -165,19 +175,21 @@ void cadastro2(Cadastro_Livro livro[], int& id_livro)
 
         do
         {
-            cout << "\n---------- Cadastro de Livros["<<id_livro<<"] -----------\n\n\n";
+            cout << "---------- Cadastro de Livros["<<id_livro<<"] -----------\n\n";
             fflush(stdin);
             cout << "Código do livro: ";
-            cin.getline(livro[id_livro].codigo, 10);
+            cin.getline(opcao, 10);
+            livro[id_livro].codigo = atoi(opcao);
             fflush(stdin);
             cout << "Nome do livro: ";
             cin.getline(livro[id_livro].nome, 50);
             fflush(stdin);
             cout << "Quantidade de exemplares: ";
-            cin.getline(livro[id_livro].qtd, 10);
+            cin.getline(opcao, 10);
+            livro[id_livro].qtd = atoi(opcao);
             fflush(stdin);
             id_livro++;
-            cout << "\nQuer fazer outro cadastro?\n1 - Sim\n2 - Não\n\nInforme a opção: ";
+            cout << "\nCadastrar outro Livro?\n1 - SIM\n2 - NÃO\n\nInforme a opção: ";
             cin.getline(opcao, 10);
             aux = atoi(opcao);
             system("cls");
@@ -189,14 +201,49 @@ void cadastro2(Cadastro_Livro livro[], int& id_livro)
 void exibir_livros (Cadastro_Livro livro[], int id_livro)
 {
     int indice;
+        cout << "*********** Dados dos Livros ***********\n\n";
         for (indice=1; indice<id_livro; indice++)
         {
-            cout << "\n\nLivro["<<indice<<"]\n";
-            cout << endl << "Código do Livro: " << livro[indice].codigo;
-            cout << endl << "Nome do Livro: " << livro[indice].nome;
-            cout << endl << "Quantidade de Exemplares: " << livro[indice].qtd;
+            cout << "----------Livro " << indice << "----------\n";
+            cout << endl << "Quantidade..: " << livro[indice].qtd;
+            cout << endl << "Código......: " << livro[indice].codigo;
+            cout << endl << "Nome........: " << livro[indice].nome << endl;
         }
     cout << "\n\n";
-    system("pause");
-    system("cls");
+}
+
+void emprestimo (Cadastro_Livro livro[], int id_livro)
+{
+    int indice, codigo, qtd;
+
+    cout << "\t\t|------------------------------|\n";
+    cout << "\t\t| Biblioteca Central da Cidade |\n";
+    cout << "\t\t|------------------------------|\n\n";
+    cout << "LIVROS DISPONÍVEIS:\n";
+    exibir_livros(livro, id_livro);
+    cout << "Informe o código do livro: ";
+    cin >> codigo;
+    fflush(stdin);
+    for(indice=1; indice<id_livro; indice++)
+    {
+        if(codigo!= livro[indice].codigo)
+        {
+            cout << "Código Inválido. Informe outro código: ";
+            cin >> codigo;
+        }
+        else
+            if(livro[indice].qtd<1)
+                {
+                    cout << "Quantidade Indisponível. Informe outro código: ";
+                    cin >> codigo;
+                }
+            else
+                if(codigo==livro[indice].codigo && livro[indice].qtd>0)
+                    {
+                        livro[indice].qtd--;
+                        cout << "Empréstimo Realizado com Sucesso!";
+                        break;
+                    }
+    }
+    Sleep(1500);
 }

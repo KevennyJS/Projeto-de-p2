@@ -224,26 +224,26 @@ void emprestimo (Cadastro_Livro livro[], int id_livro)
     cout << "Informe o código do livro: ";
     cin >> codigo;
     fflush(stdin);
+    fix:
     for(indice=1; indice<id_livro; indice++)
     {
         if(codigo!= livro[indice].codigo)
         {
-            cout << "Código Inválido. Informe outro código: ";
+            cout << "Código Inválido.\nInforme outro código: ";
+            cin >> codigo;
+            goto fix;
+        }
+        else if(livro[indice].qtd<1)
+        {
+            cout << "Quantidade Indisponível.\nInforme outro código: ";
             cin >> codigo;
         }
-        else
-            if(livro[indice].qtd<1)
-                {
-                    cout << "Quantidade Indisponível. Informe outro código: ";
-                    cin >> codigo;
-                }
-            else
-                if(codigo==livro[indice].codigo && livro[indice].qtd>0)
-                    {
-                        livro[indice].qtd--;
-                        cout << "Empréstimo Realizado com Sucesso!";
-                        break;
-                    }
+        else if(codigo==livro[indice].codigo && livro[indice].qtd>0)
+        {
+            livro[indice].qtd--;
+            cout << "Empréstimo Realizado com Sucesso!";
+            break;
+        }
     }
     Sleep(1500);
 }

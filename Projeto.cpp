@@ -10,7 +10,7 @@ int num_user=1;
 typedef struct {
 
     char nome[50];
-    char cpf[25];
+    int cpf;
     char telefone[25];
     char endereco[50];
     char livros_ativos[5];// AVISO! O CODIGO DOS LIVROS DEVEM TER APENAS 5 DIGITOS
@@ -36,7 +36,9 @@ void cadastro2(Cadastro_Livro liv[], int& id_livro);
 
 void exibir_livros (Cadastro_Livro livro[], int id_livro);
 
-void emprestimo (Cadastro_Livro livro[], int id_livro);
+void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]);
+
+int verificar_usuario (Cadastro_Usuario usuario[], int cpf);
 
 //----------------------------------------------------------------------------------------------------------------//
 
@@ -83,7 +85,7 @@ void home_page(Cadastro_Livro livro[],int& id_livro,Cadastro_Usuario usuario[]){
                     break;
 
                 case'3':
-                    emprestimo(livro, id_livro);
+                    emprestimo(livro, id_livro, usuario);
                     system("cls");
                     break;
 
@@ -126,6 +128,7 @@ void home_page(Cadastro_Livro livro[],int& id_livro,Cadastro_Usuario usuario[]){
 
 void cadastro(Cadastro_Usuario usuario[], int opcao){
     int contador,i,again;
+    char aux[25];
 
     if(opcao==1){
         contador = num_user-1;
@@ -136,7 +139,8 @@ void cadastro(Cadastro_Usuario usuario[], int opcao){
             cin.getline(usuario[contador].nome, 50);
             cout << "CPF: ";
             fflush(stdin);
-            cin.getline(usuario[contador].cpf, 25);
+            cin.getline(aux, 25);
+            usuario[contador].cpf = atoi(aux);
             cout << "Telefone: ";
             fflush(stdin);
             cin.getline(usuario[contador].telefone, 25);
@@ -180,7 +184,7 @@ void cadastro2(Cadastro_Livro livro[], int& id_livro)
             {
                 cout << "Código do livro(deve conter 5 dígitos): ";
                 cin.getline(opcao, 10);
-            }while(strlen(opcao)<5);
+            }while(strlen(opcao)<5 || strlen(opcao)>5);
             livro[id_livro].codigo = atoi(opcao);
             fflush(stdin);
             cout << "Nome do livro: ";
@@ -212,20 +216,30 @@ void exibir_livros (Cadastro_Livro livro[], int id_livro)
     cout << "\n\n";
 }
 
-void emprestimo (Cadastro_Livro livro[], int id_livro)
+void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[])
 {
-    int indice, codigo, qtd;
+    int indice, codigo, qtd, aux, cpf;
 
     cout << "\t\t|------------------------------|\n";
     cout << "\t\t| Biblioteca Central da Cidade |\n";
     cout << "\t\t|------------------------------|\n\n";
-    cout << "LIVROS DISPONÍVEIS:\n";
+    cout << "Informe o CPF do usuário: ";
+    cin >> cpf;
+    aux = verificar_usuario(usuario, cpf);
+    if (aux==0)
+    {
+        cout << "Usuário Cadastrado";
+    }
+    else
+        if (aux==1)
+        {
+            cout << "Usuário Válido!";
+        }
     exibir_livros(livro, id_livro);
     cout << "Informe o código do livro: ";
-    cin >> codigo;
     fflush(stdin);
     fix:
-    for(indice=1; indice<id_livro; indice++)
+    for(indice==1; indice<id_livro; indice++)
     {
         if(codigo!= livro[indice].codigo)
         {
@@ -247,4 +261,19 @@ void emprestimo (Cadastro_Livro livro[], int id_livro)
         }
     }
     Sleep(1500);
+}
+
+int verificar_usuario (Cadastro_Usuario usuario[], int cpf)
+{
+    int indice;
+        for (indice=1; indice<num_user; indice++)
+        {
+            if(cpf==usuario[indice].cpf)
+            {
+                return 0;
+            }
+            else
+                return 1;
+        }
+
 }

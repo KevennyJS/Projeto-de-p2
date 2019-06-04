@@ -7,14 +7,14 @@ using namespace std;
 char escolha_home;
 int num_user=1;
 
-struct Cadastro_Usuario{
+typedef struct {
 
     char nome[50];
     char cpf[25];
     char telefone[25];
     char endereco[50];
     char livros_ativos[5];// AVISO! O CODIGO DOS LIVROS DEVEM TER APENAS 5 DIGITOS
-};
+}Cadastro_Usuario;
 
 typedef struct
 {
@@ -28,9 +28,9 @@ typedef struct
 
 //-------------------------------------Prototipo das funções-----------------------------------------------------//
 
-void home_page(Cadastro_Livro livro[], int& id_livro);
+void home_page(Cadastro_Livro livro[], int& id_livro, Cadastro_Usuario usuario[]);
 
-void cadastro(int x);
+void cadastro(Cadastro_Usuario usuario[], int x);
 
 void cadastro2(Cadastro_Livro liv[], int& id_livro);
 
@@ -45,14 +45,14 @@ int main (){
     setlocale(LC_ALL, "portuguese");  // Comando para acentuar tudo q tiver no cout//
     int id_livro=1;
     Cadastro_Livro livro[100];
-    home_page(livro, id_livro);
+    Cadastro_Usuario usuario[100];
+    home_page(livro, id_livro,usuario);
     return 0;
 
 }
 
-void home_page(Cadastro_Livro livro[],int& id_livro){
+void home_page(Cadastro_Livro livro[],int& id_livro,Cadastro_Usuario usuario[]){
     int escolha_case6;
-    struct Cadastro_Usuario usuario;
 
     do
     {
@@ -73,7 +73,7 @@ void home_page(Cadastro_Livro livro[],int& id_livro){
             switch (escolha_home){
 
                 case'1':
-                    cadastro(1);
+                    cadastro(usuario,1);
                     system("cls");
                     break;
 
@@ -106,7 +106,7 @@ void home_page(Cadastro_Livro livro[],int& id_livro){
                     }
                     else if(escolha_case6==2){
                         system("CLS");
-                        cadastro(2);
+                        cadastro(usuario,2);
                     }
                     else{
                         cout<< "Escolha invalida!\n\n";
@@ -124,9 +124,8 @@ void home_page(Cadastro_Livro livro[],int& id_livro){
     }while(escolha_home!= '7');
 }
 
-void cadastro(int opcao){
+void cadastro(Cadastro_Usuario usuario[], int opcao){
     int contador,i,again;
-    struct Cadastro_Usuario usuario[100];
 
     if(opcao==1){
         contador = num_user-1;

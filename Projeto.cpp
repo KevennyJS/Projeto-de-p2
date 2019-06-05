@@ -127,7 +127,7 @@ void home_page(Cadastro_Livro livro[],int& id_livro,Cadastro_Usuario usuario[]){
 }
 
 void cadastro(Cadastro_Usuario usuario[], int opcao){
-    int contador,i,again,aux;
+    int contador,i,again,aux,cont1;
     char cpf[11];
 
     if(opcao==1){
@@ -165,6 +165,9 @@ void cadastro(Cadastro_Usuario usuario[], int opcao){
                     printf("CPF .......: %d\n", usuario[i-1].cpf);
                     printf("Telefone ..: %s\n", usuario[i-1].telefone);
                     printf("Endereço ..: %s\n", usuario[i-1].endereco);
+                    for(cont1=1;cont1<=usuario[i-1].num_livros_ativos;cont1++){
+                        printf("livrosAtivos : %d, ", usuario[cont1].livros_ativos);
+                    }
                 }
             system("pause");
             system("CLS");
@@ -238,7 +241,7 @@ void emprestimo (Cadastro_Livro livro[], int id_livro,Cadastro_Usuario usuario[]
     cin >> codigo;
     fflush(stdin);
     fix:
-    for(indice=1; indice<id_livro; indice++){
+    for(indice=1; indice<id_livro;){
         if(codigo!= livro[indice].codigo)
         {
             cout << "Código Inválido.\nInforme outro código: ";
@@ -253,20 +256,22 @@ void emprestimo (Cadastro_Livro livro[], int id_livro,Cadastro_Usuario usuario[]
         }
         else if(codigo==livro[indice].codigo && livro[indice].qtd>0)
         {
-            for(cont1=0 ;cont1<num_user;cont1++){
+            for(cont1=0 ;cont1<num_user;){
                 if (usuario[cont1].cpf == cpf){
                     aux=usuario[cont1].num_livros_ativos+1;
                     usuario[aux].livros_ativos = codigo;
                     livro[indice].qtd--;
-                    printf("seinao ..: %d\n", usuario[cont1].livros_ativos);
+                    usuario[cont1].num_livros_ativos++;
                     system("pause");
                     break;
                 }
+                cont1++;
             }
 
             cout << "Empréstimo Realizado com Sucesso!";
             break;
         }
+    indice++;
     }
     Sleep(1500);
     }
@@ -278,8 +283,6 @@ int verificar_usuario (Cadastro_Usuario usuario[], int cpf){
             if(cpf==usuario[indice].cpf){
                 return 1;
             }
-            else
-                return 0;
         }
-
+return 0;
 }

@@ -31,11 +31,13 @@ typedef struct
 
 void home_page(Cadastro_Livro livro[], int& id_livro, Cadastro_Usuario usuario[]);
 
-void cadastro(Cadastro_Usuario usuario[], int x);
+void cadastro(Cadastro_Usuario usuario[]); // SOBRECARGA
 
-void cadastro2(Cadastro_Livro liv[], int& id_livro);
+void cadastro(Cadastro_Livro liv[], int& id_livro); //SOBRECARGA
 
-void exibir_livros (Cadastro_Livro livro[], int id_livro);
+void exibir (Cadastro_Livro livro[], int id_livro); //SOBRECARGA
+
+void exibir (Cadastro_Usuario usuario[]); //SOBRECARGA
 
 void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]);
 
@@ -75,12 +77,12 @@ void home_page(Cadastro_Livro livro[],int& id_livro,Cadastro_Usuario usuario[]){
             switch (escolha_home){
 
                 case'1':
-                    cadastro(usuario,1);
+                    cadastro(usuario);
                     system("cls");
                     break;
 
                 case'2':
-                    cadastro2(livro, id_livro);
+                    cadastro(livro, id_livro);
                     system("cls");
                     break;
 
@@ -101,14 +103,14 @@ void home_page(Cadastro_Livro livro[],int& id_livro,Cadastro_Usuario usuario[]){
                     cin>> escolha_case6;
                     if(escolha_case6==1){
                             system("cls");
-                            exibir_livros(livro, id_livro);
+                            exibir(livro, id_livro);
                             system("pause");
                             system("cls");
 
                     }
                     else if(escolha_case6==2){
                         system("CLS");
-                        cadastro(usuario,2);
+                        exibir(usuario);
                     }
                     else{
                         cout<< "Escolha invalida!\n\n";
@@ -126,11 +128,10 @@ void home_page(Cadastro_Livro livro[],int& id_livro,Cadastro_Usuario usuario[]){
     }while(escolha_home!= '7');
 }
 
-void cadastro(Cadastro_Usuario usuario[], int opcao){
-    int contador,i,again,aux,cont1;
+void cadastro(Cadastro_Usuario usuario[]){
+    int contador,again,aux;
     char cpf[11];
 
-    if(opcao==1){
         contador = num_user-1;
         for(;contador < num_user;contador++) {
             cout << "********** Cadastro Do Usuário **********\n\n";
@@ -155,9 +156,11 @@ void cadastro(Cadastro_Usuario usuario[], int opcao){
             system("cls");
             cout << "\n\nSalvando Dados...";
             Sleep(1500);
-    }
+}
 
-    if (opcao==2){
+void exibir(Cadastro_Usuario usuario[])
+{
+    int i, cont1;
             printf("********** Dados dos Usuários **********\n\n");
                 for(i=1; i < num_user; i++){
                     printf("----------Usuário %d----------\n",i);
@@ -171,10 +174,9 @@ void cadastro(Cadastro_Usuario usuario[], int opcao){
                 }
             system("pause");
             system("CLS");
-    }
 }
 
-void cadastro2(Cadastro_Livro livro[], int& id_livro)
+void cadastro(Cadastro_Livro livro[], int& id_livro)
 {
         int aux;
         char opcao[10];
@@ -209,7 +211,7 @@ void cadastro2(Cadastro_Livro livro[], int& id_livro)
             Sleep(1500);
 }
 
-void exibir_livros (Cadastro_Livro livro[], int id_livro)
+void exibir (Cadastro_Livro livro[], int id_livro)
 {
     int indice;
         cout << "*********** Livros Cadastrados ***********\n\n";
@@ -221,8 +223,10 @@ void exibir_livros (Cadastro_Livro livro[], int id_livro)
     cout << "\n\n";
 }
 
-void emprestimo (Cadastro_Livro livro[], int id_livro,Cadastro_Usuario usuario[]){
+void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]){
+
     int indice, codigo, qtd,autenticacao_usuario,cont1,cpf,aux;
+
     cout << "\t\t|------------------------------|\n";
     cout << "\t\t| Biblioteca Central da Cidade |\n";
     cout << "\t\t|------------------------------|\n\n";
@@ -236,7 +240,7 @@ void emprestimo (Cadastro_Livro livro[], int id_livro,Cadastro_Usuario usuario[]
     else if (autenticacao_usuario==1){
     cout << "Usuário valido!\n\n";
     Sleep(1500);
-    exibir_livros(livro, id_livro);
+    exibir(livro, id_livro);
     cout << "Informe o código do livro: ";
     cin >> codigo;
     fflush(stdin);
@@ -262,7 +266,6 @@ void emprestimo (Cadastro_Livro livro[], int id_livro,Cadastro_Usuario usuario[]
                     usuario[aux].livros_ativos = codigo;
                     livro[indice].qtd--;
                     usuario[cont1].num_livros_ativos++;
-                    system("pause");
                     break;
                 }
                 cont1++;

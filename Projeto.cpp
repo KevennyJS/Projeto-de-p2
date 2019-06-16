@@ -4,7 +4,6 @@
 #include <locale.h>
 #include <string.h>
 using namespace std;
-char escolha_home;
 int num_user=1;
 
 typedef struct
@@ -24,6 +23,8 @@ typedef struct {
     char endereco[50];
     int livros_ativos[100];
     int num_livros_ativos;
+    int num_livros_reser;
+    int livros_reserv[100];
 
 }Cadastro_Usuario;
 
@@ -59,6 +60,12 @@ int verificar_livro (Cadastro_Usuario usuario[]);
 
 int verificar_codigo(Cadastro_Livro livro[], int id_livro, int codigo, int& aux2);
 
+void Reserva (Cadastro_Usuario usuario[], Cadastro_Livro livro[], int id_livro);
+
+void reserva_livro(Cadastro_Usuario usuario[], Cadastro_Livro livro[], int id_livro);
+
+void exibir_reserva(Cadastro_Usuario usuario[], Cadastro_Livro livro[], int id_livro);
+
 //----------------------------------------------------------------------------------------------------------------//
 
 int main (){
@@ -73,6 +80,7 @@ int main (){
 
 void home_page(Cadastro_Livro livro[],int& id_livro,Cadastro_Usuario usuario[]){
     int escolha_case6;
+    char escolha_home;
 
     do
     {
@@ -113,7 +121,9 @@ void home_page(Cadastro_Livro livro[],int& id_livro,Cadastro_Usuario usuario[]){
                     break;
 
                 case'5':
-
+                    Reserva(usuario, livro, id_livro);
+                    system("cls");
+                    break;
 
                 case'6':
                     cout << endl << "CONSULTA:\n\n";
@@ -178,7 +188,7 @@ void cadastro(Cadastro_Usuario usuario[]){
 
 void exibir(Cadastro_Usuario usuario[])
 {
-    int i, cont1;
+    int i, cont1, cont2;
             printf("********** Dados dos Usuários **********\n\n");
                 for(i=1; i < num_user; i++){
                     printf ("\n");
@@ -189,9 +199,9 @@ void exibir(Cadastro_Usuario usuario[])
                     printf("Endereço ..: %s\n", usuario[i-1].endereco);
                     printf ("Livros Ativos: ");
                     for(cont1=1;cont1<=usuario[i-1].num_livros_ativos;cont1++){
-                                printf("%d, ", usuario[i-1].livros_ativos[cont1]);
+                        printf("%d, ", usuario[i-1].livros_ativos[cont1]);
                     }
-                            }
+                }
             printf ("\n");
             system("pause");
             system("CLS");
@@ -329,14 +339,100 @@ void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]
         }
             else if (verificar_livro(usuario)==1)
             {
-                cout << "LIVROS ATIVOS:" << endl; // AJEITAR A EXIBIÇÃO DOS LIVROS ATIVOS AQUI//
-                for (indice=1; indice<=num_user; indice++)
+                for (indice=0; indice<=num_user;indice++)
                 {
-                        cout << usuario[indice].livros_ativos << endl;
+                    if(cpf==usuario[indice].cpf)
+                        exibir(usuario);
                 }
                 Sleep(1500);
                 system("pause");
             }
+        }
+}
+
+void Reserva (Cadastro_Usuario usuario[], Cadastro_Livro livro[], int id_livro)
+{
+    char opcao;
+
+    cout << "\t\t|------------------------------|\n";
+    cout << "\t\t| Biblioteca Central da Cidade |\n";
+    cout << "\t\t|------------------------------|\n\n";
+    cout << "1 - Reservar um Livro" << endl;
+    cout << "2 - Consultar Fila de Espera" << endl;
+    cout << "3 - Sair" << endl;
+    cout << "Informe a opção desejada: ";
+    cin >> opcao;
+    switch(opcao)
+    {
+        case'1':
+        system("cls");
+        reserva_livro(usuario, livro, id_livro);
+        system("cls");
+        system("pause");
+        break;
+
+        case'2':
+        exibir_reserva(usuario, livro, id_livro);
+        system("cls");
+        system("pause");
+        break;
+
+        case'3':
+        exit;
+        break;
+    }
+
+}
+
+void reserva_livro(Cadastro_Usuario usuario[], Cadastro_Livro livro[], int id_livro)
+{
+    int cpf, codigo, i, j, aux;
+
+    cout << "\t\t|------------------------------|\n";
+    cout << "\t\t| Biblioteca Central da Cidade |\n";
+    cout << "\t\t|------------------------------|\n\n";
+    cout << "Informe o CPF do usuario: ";
+    cin >> cpf;
+    if (verificar_usuario(usuario,cpf)==0){
+        cout << "O Usuário não está cadastrado!\n";
+        system("pause");
+    }
+    else if (verificar_usuario(usuario,cpf)==1){
+        cout << "Usuário valido!\n\n";
+        Sleep(1500);
+        exibir(livro, id_livro);
+        cout << "Informe o codigo do livro: ";
+        cin >> codigo;
+            for (i=1; i<=id_livro; i++)
+            {
+                if(codigo==livro[i].codigo && livro[i].qtd>0)
+                {
+                    for(j=0 ;j<num_user;j++){
+                    if (usuario[j].cpf == cpf){
+                        aux=usuario[j].num_livros_reser+1;
+                        usuario[j].livros_ativos[aux] = codigo;
+                        usuario[j].num_livros_reser++;
+                        break;
+                        }
+                    }
+                cout << "Reserva realizada com sucesso!!";
+                break;
+                }
+
+            }
+    }
+}
+
+void exibir_reserva(Cadastro_Usuario usuario[], Cadastro_Livro livro[], int id_livro)
+{
+    int i, j;
+
+        for(i=1; i<=num_user; i++)
+        {
+            cout << endl << i << "\t\t" << usuario[i-1].cpf << "\t\t";
+                for(j=1;j<=usuario[i-1].num_livros_reser;j++){
+                    cout << usuario[i-1].livros_reserv[j];
+                }
         }
 }
 

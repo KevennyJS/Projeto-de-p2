@@ -22,7 +22,7 @@ typedef struct {
     int cpf;
     char telefone[25];
     char endereco[50];
-    int livros_ativos;
+    int livros_ativos[100];
     int num_livros_ativos;
 
 }Cadastro_Usuario;
@@ -189,7 +189,7 @@ void exibir(Cadastro_Usuario usuario[])
                     printf("Endereço ..: %s\n", usuario[i-1].endereco);
                     printf ("Livros Ativos: ");
                     for(cont1=1;cont1<=usuario[i-1].num_livros_ativos;cont1++){
-                                printf("%d, ", usuario[cont1].livros_ativos);
+                                printf("%d, ", usuario[i-1].livros_ativos[cont1]);
                     }
                             }
             printf ("\n");
@@ -281,7 +281,7 @@ void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[
                 for(cont1=0 ;cont1<num_user;cont1++){
                     if (usuario[cont1].cpf == cpf){
                         aux=usuario[cont1].num_livros_ativos+1;
-                        usuario[aux].livros_ativos = codigo;
+                        usuario[cont1].livros_ativos[aux] = codigo;
                         livro[indice].qtd--;
                         usuario[cont1].num_livros_ativos++;
                         break;

@@ -24,6 +24,7 @@ typedef struct {
     char endereco[50];
     int livros_ativos;
     int num_livros_ativos;
+
 }Cadastro_Usuario;
 
 typedef struct
@@ -180,16 +181,18 @@ void exibir(Cadastro_Usuario usuario[])
     int i, cont1;
             printf("********** Dados dos Usuários **********\n\n");
                 for(i=1; i < num_user; i++){
+                    printf ("\n");
                     printf("----------Usuário %d----------\n",i);
                     printf("Nome ......: %s\n", usuario[i-1].nome);
                     printf("CPF .......: %d\n", usuario[i-1].cpf);
                     printf("Telefone ..: %s\n", usuario[i-1].telefone);
-                    printf("Endereço ..: %s\n", usuario[i-1].endereco);}
+                    printf("Endereço ..: %s\n", usuario[i-1].endereco);
                     printf ("Livros Ativos: ");
                     for(cont1=1;cont1<=usuario[i-1].num_livros_ativos;cont1++){
-                        printf("%d ,", usuario[cont1].livros_ativos);//AJEITAR A EXIBIÇÃO DOS LIVROS ATIVOS AQUI
-                    }                                               //TENTEI MUDAR PQ TAVA REPETINDO O NOME "LIVROS ATIVOS"
-            printf ("\n");                                          // MAS NÃO DEU CERTO QD RODEI
+                                printf("%d, ", usuario[cont1].livros_ativos);
+                    }
+                            }
+            printf ("\n");
             system("pause");
             system("CLS");
 }
@@ -311,39 +314,39 @@ void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]
     cin >> cpf;
     fflush(stdin);
     if (verificar_usuario(usuario, cpf)==0){
-        cout << "O Usuário não está cadastrado!\n";// FAZER VOLTAR AO MENU PRINCIPAL QD O USUARIO NAO TIVER CADASTRADO
-        system("pause");                          // PQ TA RODANDO O RESTO DO CODIGO QD DA USUARIO INVALIDO
+        cout << "O Usuário não está cadastrado!\n";
+        system("pause");
         exit;
     }
-    else if (verificar_usuario(usuario, cpf)==1)
+    else if (verificar_usuario(usuario, cpf)==1){
         cout << "Usuário válido!\n\n";
-    cout << "PROCESSANDO...\n\n";
-    Sleep(2000);
-    if (verificar_livro(usuario)==0)
-    {
-        cout << "O usuário não possui livros ativos\n";
-        system("pause");
-    }
-    else if (verificar_livro(usuario)==1)
-    {
-        cout << "LIVROS ATIVOS:" << endl; // AJEITAR A EXIBIÇÃO DOS LIVROS ATIVOS AQUI//
-        for (indice=0; indice<=num_user; indice++)
+        cout << "PROCESSANDO...\n\n";
+        Sleep(2000);
+        if (verificar_livro(usuario)==0)
         {
-            cout << usuario[indice].livros_ativos << endl;
-            break;
+            cout << "O usuário não possui livros ativos\n";
+            system("pause");
         }
-        Sleep(1500);
-        system("pause");
-    }
-
+            else if (verificar_livro(usuario)==1)
+            {
+                cout << "LIVROS ATIVOS:" << endl; // AJEITAR A EXIBIÇÃO DOS LIVROS ATIVOS AQUI//
+                for (indice=1; indice<=num_user; indice++)
+                {
+                        cout << usuario[indice].livros_ativos << endl;
+                }
+                Sleep(1500);
+                system("pause");
+            }
+        }
 }
 
 int verificar_usuario (Cadastro_Usuario usuario[], int cpf){
     int indice;
-        for (indice=0; indice<num_user; indice++){
-            if(cpf==usuario[indice].cpf)
+        for (indice=0; indice<=num_user; indice++){
+            if(cpf==usuario[indice].cpf){
                 return 1;
                 break;
+            }
         }
     return 0;
 }

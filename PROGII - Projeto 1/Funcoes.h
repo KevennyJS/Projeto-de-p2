@@ -56,7 +56,7 @@ void reserva_livro(Cadastro_Usuario usuario[], int num_user, Cadastro_Livro livr
 
 void exibir_reserva(Cadastro_Usuario usuario[], Cadastro_Livro livro[], int id_livro, int num_user);
 
-int verificar_1(Cadastro_Usuario usuario[], int&CDL);
+//int verificar_1(Cadastro_Usuario usuario[], int CDL);
 
 //----------------------------------------------------------------------------------------------------------------//
 
@@ -309,16 +309,16 @@ void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[
 }
 
 void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[], int num_user){
-    int indice,multa,multaAno,multaMes,CDL,dia,mes,ano,cont;
-    long int cod_user;
+    int indice,multa=0,multaAno=0,multaMes=0,CDL,dia=0,mes=0,ano=0,cont=0;
+    int cod_user;
 
     cout << "\t\t|------------------------------|\n";
     cout << "\t\t| Biblioteca Central da Cidade |\n";
     cout << "\t\t|------------------------------|\n\n";
     cout << "Informe o cod_user do usuário: ";
     cin >> cod_user;
-    cout << "Informe a data atual";
-    cin >> dia >> mes >> ano;
+    //cout << "Informe a data atual";
+    //cin >> dia >> mes >> ano;
 
     fflush(stdin);
     if (verificar_usuario(usuario, cod_user, num_user)==0){
@@ -338,14 +338,14 @@ void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]
         else if (verificar_livro(usuario, num_user)==1){
             cout << "Digite o codigo do livro que deseja devolver: ";
             cin >> CDL;
-            if (verificar_1(usuario, CDL)==1){
+            //if (verificar_1(usuario, CDL)==1){
                 ///////////////////////////////////////////////
                 cout << "INFORME DIA MES E ANO DA DEVOLUCAO:\n";
                 cin >> dia >> mes >> ano;
 
                 while(dia>30||mes>12){
                 cout << "DATA INVALIDA\nINFORME DIA MES E ANO DA DEVOLUCAO:\n";
-                cin >> dia >> mes >> ano;
+                cin >> dia;
                 }
                 if((dia-usuario[NDU].dia)>10||(mes-usuario[NDU].mes)>=0||(ano-usuario[NDU].ano)>=0){
                 multaAno=(ano-usuario[NDU].ano);
@@ -362,16 +362,19 @@ void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]
                 if(cont>0){
                 cout << "A multa e de "<<cont<<"Reais"<<endl;
                 }
+                }
                 else{
                     cout << "NAO HA MULTA";
                 }
             }
-            }
-            //////////////////////////////////////////////////
             Sleep(1500);
             system("pause");
         }
-    }
+        for(indice=0; indice<=usuario[NDU].num_livros_ativos; indice++){
+            if(CDL==livro[indice].codigo){
+                livro[indice].qtd++;
+            }
+        }
 }
 
 void Reserva (Cadastro_Usuario usuario[], int num_user, Cadastro_Livro livro[], int id_livro){
@@ -523,13 +526,16 @@ int verificaExistente(Cadastro_Livro livros[], int id_livro, char opcao[]){
     return 0;
 }
 
-int verificar_1(Cadastro_Usuario usuario[], int&CDL){
-    int indice;                                     // A PASSAGEM FOI POR REFERÊNCIA PRA FAZER O TRATAMENTO DA QTD DE LIVROS LOGO
+/*int verificar_1(Cadastro_Usuario usuario[], int CDL){
+    int indice,cont;                                     // A PASSAGEM FOI POR REFERÊNCIA PRA FAZER O TRATAMENTO DA QTD DE LIVROS LOGO
         for (indice=0; indice<=usuario[NDU].num_livros_ativos; indice++){
-            if(CDL==usuario[indice].livros_ativos){
+            for (cont=0;cont<=100;cont++){
+                if(CDL==usuario[indice].livros_ativos[100]){
                 return 1;
                 break;
+                }
             }
         }
         return 0;
 }
+*/

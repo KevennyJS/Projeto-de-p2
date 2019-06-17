@@ -4,10 +4,9 @@
 #include <locale.h>
 #include <string.h>
 using namespace std;
-int num_user=1;
+int num_user=1,NDU;
 
-typedef struct
-{
+typedef struct{
     int dia;
     int mes;
     int ano;
@@ -25,6 +24,9 @@ typedef struct {
     int num_livros_ativos;
     int num_livros_reser;
     int livros_reserv[100];
+    int dia;
+    int mes;
+    int ano;
 
 }Cadastro_Usuario;
 
@@ -272,7 +274,8 @@ void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[
     Sleep(1500);
     exibir(livro, id_livro);
     cout << "Informe a data do empréstimo: ";
-    cin >> data1.dia >> data1.mes >> data1.ano;
+    cin >> usuario[NDU].dia >> usuario[NDU].mes >> usuario[NDU].ano;
+    cout << usuario[NDU].dia << usuario[NDU].mes << usuario[NDU].ano;
     cout << "Informe o código do livro: ";
     cin >> codigo;
     fflush(stdin);
@@ -440,6 +443,7 @@ int verificar_usuario (Cadastro_Usuario usuario[], int cpf){
     int indice;
         for (indice=0; indice<=num_user; indice++){
             if(cpf==usuario[indice].cpf){
+                NDU=indice;
                 return 1;
                 break;
             }

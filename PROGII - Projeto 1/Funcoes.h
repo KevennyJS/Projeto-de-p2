@@ -1,13 +1,5 @@
 using namespace std;
-
-typedef struct
-{
-    int dia;
-    int mes;
-    int ano;
-}Data;
-
-Data data1, data2; // data1 e variavel para emprestimo e data2 para devolução... ambas fazem parte do mesmo struct DATA
+int NDU;
 
 typedef struct {
 
@@ -19,6 +11,9 @@ typedef struct {
     int num_livros_ativos;
     int num_livros_reser;
     int livros_reserv[100];
+    int dia;
+    int mes;
+    int ano;
 
 }Cadastro_Usuario;
 
@@ -43,9 +38,9 @@ void exibir (Cadastro_Livro livro[], int id_livro); //SOBRECARGA
 
 void exibir (Cadastro_Usuario usuario[], int num_user); //SOBRECARGA
 
-void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[], int num_user, Data data1);
+void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[], int num_user);
 
-void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[], int num_user, Data data1, Data data2);
+void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[], int num_user);
 
 int verificar_usuario (Cadastro_Usuario usuario[], int cod_user, int num_user);
 
@@ -60,6 +55,8 @@ void Reserva (Cadastro_Usuario usuario[], int num_user, Cadastro_Livro livro[], 
 void reserva_livro(Cadastro_Usuario usuario[], int num_user, Cadastro_Livro livro[], int id_livro);
 
 void exibir_reserva(Cadastro_Usuario usuario[], Cadastro_Livro livro[], int id_livro, int num_user);
+
+int verificar_1(Cadastro_Usuario usuario[], int&CDL);
 
 //----------------------------------------------------------------------------------------------------------------//
 
@@ -97,12 +94,12 @@ void home_page(Cadastro_Livro livro[],int& id_livro,Cadastro_Usuario usuario[], 
                     break;
 
                 case'3':
-                    emprestimo(livro, id_livro, usuario, num_user, data1);
+                    emprestimo(livro, id_livro, usuario, num_user);
                     system("cls");
                     break;
 
                 case'4':
-                    Devolucao(livro, id_livro, usuario, num_user, data1, data2);
+                    Devolucao(livro, id_livro, usuario, num_user);
                     system("cls");
                     break;
 
@@ -251,7 +248,7 @@ void exibir (Cadastro_Livro livro[], int id_livro)
     cout << "\n\n";
 }
 
-void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[], int num_user, Data data1){
+void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[], int num_user){
 
     int indice, codigo, qtd, cont1, aux, aux2;
     int cod_user;
@@ -270,7 +267,7 @@ void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[
     Sleep(1500);
     exibir(livro, id_livro);
     cout << "Informe a data do empréstimo: ";
-    cin >> data1.dia >> data1.mes >> data1.ano;
+    cin >> usuario[NDU].dia >> usuario[NDU].mes >> usuario[NDU].ano;
     cout << "Informe o código do livro: ";
     cin >> codigo;
     fflush(stdin);
@@ -311,9 +308,8 @@ void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[
     }
 }
 
-void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[], int num_user, Data data1, Data data2)
-{
-    int indice,multa,dias;
+void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[], int num_user){
+    int indice,multa,multaAno,multaMes,CDL,dia,mes,ano,cont;
     long int cod_user;
 
     cout << "\t\t|------------------------------|\n";
@@ -322,12 +318,8 @@ void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]
     cout << "Informe o cod_user do usuário: ";
     cin >> cod_user;
     cout << "Informe a data atual";
-    cin >> data2.dia >> data2.mes >> data2.ano;
-    dias = ((data2.dia&&data2.mes&&data2.ano)-(data1.dia&&data1.mes&&data1.ano));
+    cin >> dia >> mes >> ano;
 
-    if(((data2.dia&&data2.mes&&data2.ano)-(data1.dia&&data1.mes&&data1.ano))>10){
-
-    }
     fflush(stdin);
     if (verificar_usuario(usuario, cod_user, num_user)==0){
         cout << "O Usuário não está cadastrado!\n";
@@ -343,21 +335,46 @@ void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]
             cout << "O usuário não possui livros ativos\n";
             system("pause");
         }
-            else if (verificar_livro(usuario, num_user)==1)
-            {
-                for (indice=0; indice<=num_user;indice++)
-                {
-                    if(cod_user==usuario[indice].cod_user)
-                        exibir(usuario, num_user);
+        else if (verificar_livro(usuario, num_user)==1){
+            cout << "Digite o codigo do livro que deseja devolver: ";
+            cin >> CDL;
+            if (verificar_1(usuario, CDL)==1){
+                ///////////////////////////////////////////////
+                cout << "INFORME DIA MES E ANO DA DEVOLUCAO:\n";
+                cin >> dia >> mes >> ano;
+
+                while(dia>30||mes>12){
+                cout << "DATA INVALIDA\nINFORME DIA MES E ANO DA DEVOLUCAO:\n";
+                cin >> dia >> mes >> ano;
                 }
-                Sleep(1500);
-                system("pause");
+                if((dia-usuario[NDU].dia)>10||(mes-usuario[NDU].mes)>=0||(ano-usuario[NDU].ano)>=0){
+                multaAno=(ano-usuario[NDU].ano);
+                multaMes=(mes-usuario[NDU].mes);
+                while(multaAno>=1){
+                    multaAno=(multaAno-1);
+                    cont=cont+365;
+                    }
+                while(multaMes>=1){
+                    multaMes=(multaMes-1);
+                    cont=cont+30;
+                }
+                cont=(((dia-usuario[NDU].dia)+cont)-10);
+                if(cont>0){
+                cout << "A multa e de "<<cont<<"Reais"<<endl;
+                }
+                else{
+                    cout << "NAO HA MULTA";
+                }
             }
+            }
+            //////////////////////////////////////////////////
+            Sleep(1500);
+            system("pause");
         }
+    }
 }
 
-void Reserva (Cadastro_Usuario usuario[], int num_user, Cadastro_Livro livro[], int id_livro)
-{
+void Reserva (Cadastro_Usuario usuario[], int num_user, Cadastro_Livro livro[], int id_livro){
     char opcao;
 
     cout << "\t\t|------------------------------|\n";
@@ -443,8 +460,7 @@ void reserva_livro(Cadastro_Usuario usuario[], int num_user, Cadastro_Livro livr
     Sleep(1500);
 }
 
-void exibir_reserva(Cadastro_Usuario usuario[], Cadastro_Livro livro[], int id_livro, int num_user)
-{
+void exibir_reserva(Cadastro_Usuario usuario[], Cadastro_Livro livro[], int id_livro, int num_user){
     int i, j;
 
         cout << "*********** Fila de Espera ***********\n\n";
@@ -464,6 +480,7 @@ int verificar_usuario (Cadastro_Usuario usuario[], int cod_user, int num_user){
     int indice;
         for (indice=0; indice<=num_user; indice++){
             if(cod_user==usuario[indice].cod_user){
+                NDU=indice;
                 return 1;
                 break;
             }
@@ -483,8 +500,7 @@ int verificar_livro (Cadastro_Usuario usuario[], int num_user)
     return 0;
 }
 
-int verificar_codigo(Cadastro_Livro livro[], int id_livro, int codigo, int& aux2)
-{
+int verificar_codigo(Cadastro_Livro livro[], int id_livro, int codigo, int& aux2){
     int indice;                                     // A PASSAGEM FOI POR REFERÊNCIA PRA FAZER O TRATAMENTO DA QTD DE LIVROS LOGO
         for (indice=1; indice<=id_livro; indice++)  // AÍ NAO PRECISA CRIAR OUTRA FUNÇÃO PARA ISSO... VEJA LÁ EM EMPRÉSTIMO
         {
@@ -507,3 +523,13 @@ int verificaExistente(Cadastro_Livro livros[], int id_livro, char opcao[]){
     return 0;
 }
 
+int verificar_1(Cadastro_Usuario usuario[], int&CDL){
+    int indice;                                     // A PASSAGEM FOI POR REFERÊNCIA PRA FAZER O TRATAMENTO DA QTD DE LIVROS LOGO
+        for (indice=0; indice<=usuario[NDU].num_livros_ativos; indice++){
+            if(CDL==usuario[indice].livros_ativos){
+                return 1;
+                break;
+            }
+        }
+        return 0;
+}

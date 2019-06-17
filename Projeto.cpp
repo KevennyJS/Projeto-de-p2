@@ -6,14 +6,6 @@
 using namespace std;
 int num_user=1,NDU;
 
-typedef struct{
-    int dia;
-    int mes;
-    int ano;
-}Data;
-
-Data data1, data2; // data1 e variavel para emprestimo e data2 para devolução... ambas fazem parte do mesmo struct DATA
-
 typedef struct {
 
     char nome[50];
@@ -52,9 +44,9 @@ void exibir (Cadastro_Livro livro[], int id_livro); //SOBRECARGA
 
 void exibir (Cadastro_Usuario usuario[]); //SOBRECARGA
 
-void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[], Data data1);
+void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]);
 
-void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[], Data data1, Data data2);
+void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]);
 
 int verificar_usuario (Cadastro_Usuario usuario[], int cpf);
 
@@ -113,12 +105,12 @@ void home_page(Cadastro_Livro livro[],int& id_livro,Cadastro_Usuario usuario[]){
                     break;
 
                 case'3':
-                    emprestimo(livro, id_livro,usuario, data1);
+                    emprestimo(livro, id_livro,usuario);
                     system("cls");
                     break;
 
                 case'4':
-                    Devolucao(livro, id_livro, usuario, data1, data2);
+                    Devolucao(livro, id_livro, usuario);
                     system("cls");
                     break;
 
@@ -188,8 +180,7 @@ void cadastro(Cadastro_Usuario usuario[]){
             Sleep(1500);
 }
 
-void exibir(Cadastro_Usuario usuario[])
-{
+void exibir(Cadastro_Usuario usuario[]){
     int i, cont1, cont2;
             printf("********** Dados dos Usuários **********\n\n");
                 for(i=1; i < num_user; i++){
@@ -256,7 +247,7 @@ void exibir (Cadastro_Livro livro[], int id_livro)
     cout << "\n\n";
 }
 
-void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[], Data data1){
+void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]){
 
     int indice, codigo, qtd, cont1, cpf, aux, aux2;
 
@@ -316,7 +307,7 @@ void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[
     }
 }
 
-void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[], Data data1, Data data2)
+void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[])
 {
     int cpf,indice;
 
@@ -353,8 +344,7 @@ void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]
         }
 }
 
-void Reserva (Cadastro_Usuario usuario[], Cadastro_Livro livro[], int id_livro)
-{
+void Reserva (Cadastro_Usuario usuario[], Cadastro_Livro livro[], int id_livro){
     char opcao;
 
     cout << "\t\t|------------------------------|\n";
@@ -365,8 +355,7 @@ void Reserva (Cadastro_Usuario usuario[], Cadastro_Livro livro[], int id_livro)
     cout << "3 - Sair" << endl;
     cout << "Informe a opção desejada: ";
     cin >> opcao;
-    switch(opcao)
-    {
+    switch(opcao){
         case'1':
         system("cls");
         reserva_livro(usuario, livro, id_livro);

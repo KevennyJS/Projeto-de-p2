@@ -56,8 +56,6 @@ void reserva_livro(Cadastro_Usuario usuario[], int num_user, Cadastro_Livro livr
 
 void exibir_reserva(Cadastro_Usuario usuario[], Cadastro_Livro livro[], int id_livro, int num_user);
 
-//int verificar_1(Cadastro_Usuario usuario[], int CDL);
-
 //----------------------------------------------------------------------------------------------------------------//
 
 
@@ -156,9 +154,9 @@ void cadastro(Cadastro_Usuario usuario[], int& num_user){
             cout << "Código(Deve conter 6 dígitos): ";
             fflush(stdin);
             cin.getline(cod_user, 10);
-            if(strlen(cod_user) < 6)
+            if(strlen(cod_user) < 6 || strlen(cod_user) > 6)
                 cout << "O codigo precisa ter 6 dígitos." << endl;
-            } while(strlen(cod_user) < 6);
+            } while(strlen(cod_user) < 6 || strlen(cod_user) > 6);
             usuario[contador].cod_user = atoi(cod_user);
             cout << "Telefone: ";
             fflush(stdin);
@@ -256,7 +254,7 @@ void emprestimo (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[
     cout << "\t\t|------------------------------|\n";
     cout << "\t\t| Biblioteca Central da Cidade |\n";
     cout << "\t\t|------------------------------|\n\n";
-    cout << "Informe o cod_user do Usuário: ";
+    cout << "Informe o código do Usuário: ";
     cin >> cod_user;
     if (verificar_usuario(usuario,cod_user, num_user)==0){
         cout << "O Usuário não está cadastrado!\n";
@@ -315,7 +313,7 @@ void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]
     cout << "\t\t|------------------------------|\n";
     cout << "\t\t| Biblioteca Central da Cidade |\n";
     cout << "\t\t|------------------------------|\n\n";
-    cout << "Informe o cod_user do usuário: ";
+    cout << "Informe o código do usuário: ";
     cin >> cod_user;
     //cout << "Informe a data atual";
     //cin >> dia >> mes >> ano;
@@ -467,7 +465,7 @@ void exibir_reserva(Cadastro_Usuario usuario[], Cadastro_Livro livro[], int id_l
     int i, j;
 
         cout << "*********** Fila de Espera ***********\n\n";
-        cout << endl << "\tNº\t|\tcod_user\t|\tCÓDIGO\t\n";
+        cout << endl << "\tNº\t|\tUsuário\t|\tCÓDIGO\t\n";
         for(i=1; i<num_user; i++)
         {
             cout << endl << "\t" << i << "\t\t" << usuario[i-1].cod_user << "\t\t";

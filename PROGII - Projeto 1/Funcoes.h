@@ -335,7 +335,7 @@ void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]
             cout << "O usuário não possui livros ativos\n";
             system("pause");
         }
-        else if (verificar_livro(usuario, num_user)==1){
+        else if (verificar_livro(usuario, num_user)>=1){
             cout << "Digite o codigo do livro que deseja devolver: ";
             cin >> CDL;
             //if (verificar_1(usuario, CDL)==1){
@@ -370,7 +370,7 @@ void Devolucao (Cadastro_Livro livro[], int id_livro, Cadastro_Usuario usuario[]
             Sleep(1500);
             system("pause");
         }
-        for(indice=0; indice<=usuario[NDU].num_livros_ativos; indice++){
+        for(indice=1; indice<=usuario[NDU].num_livros_ativos; indice++){
             if(CDL==livro[indice].codigo){
                 livro[indice].qtd++;
             }
